@@ -1,0 +1,19 @@
+{
+  "name": "os-xml-file-handler",
+  "version": "1.0.0",
+  "description": "This module will build, read and manipulate an xml files. Other handy stuff is also available, like search for a specific nodes.",
+  "main": "index.js",
+  "keywords": [
+    "osfunapps",
+    "tools",
+    "files",
+    "npm",
+    "xml"
+  ],
+  "dependencies": {
+    "os-file-stream-handler" : "^1.1.0",
+    "elementtree" : "^0.1.7"
+  },
+  "author": "osfunapps",
+  "license": "ISC"
+}

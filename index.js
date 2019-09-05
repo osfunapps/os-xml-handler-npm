@@ -13,6 +13,13 @@ const self = module.exports = {
         return self.loadXml(null, '<?xml version="1.0" encoding="utf-8"?>\n<' + rootNodeTag + '/>')
     },
 
+    /**
+     * Will join the path of dirs
+     */
+    joinPath: async function (...paths) {
+        const path = require('path');
+        return path.join(paths)
+    },
 
     /**
      * Will save any changes made in the xml

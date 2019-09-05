@@ -14,11 +14,67 @@ const self = module.exports = {
     },
 
     /**
-     * Will join the path of dirs
+     * Will insert a list of nodes into a certain (relative) location
+     *
+     * @param xml -> the xml file
+     * @param nodesList -> the list of nodes to insert
+     * @param parentNode -> (optional) the parent of the newly inserted nodes (for root descendent,
+     * leave blank)
      */
-    joinPath: async function (...paths) {
+    addNodes: function (xml, nodesList, parentNode = null) {
+
+        let insertedNodes = [];
+        for (let i = 0; i < nodesList.length; i++) {
+            let currNode = nodesList[i]
+            let insertedNode = self.addNode(xml,
+                self.getNodeTag(currNode),
+                self.getNodeAttributes(currNode),
+                self.getNodeText(currNode),
+                parentNode);
+
+            insertedNodes.push(insertedNode)
+        }
+
+        return insertedNodes
+    },
+
+    /**
+     * Will return a dictionary of the node attributes and values
+     */
+    getNodeAttributes: function (node) {
+        return node.attrib
+    },
+
+    /**
+     * Will add a node to a certain (relative) location
+     *
+     * @param xml -> the xml file
+     * @param nodeTag -> the tag for the new node ('String', for example)
+     * @param attDict -> optional dict of att and values for the new node
+     * @param nodeText -> optional text the new node will carry
+     * @param parentNode -> (optional) the parent of the new node (for root descendent, leave blank)
+     */
+    addNode: function (xml, nodeTag, attDict = {}, nodeText = null, parentNode = null) {
+
+        if(parentNode === null) {
+            parentNode = self.getRoot(xml)
+        }
+
+        let element = et.SubElement(parentNode, nodeTag, attDict);
+
+        if(nodeText !== null) {
+            self.setNodeText(element, nodeText)
+        }
+
+        return element
+    },
+
+    /**
+     * Will join the paths of dirs
+     */
+    joinPath: function (...paths) {
         const path = require('path');
-        return path.join(paths)
+        return path.join(...paths)
     },
 
     /**
@@ -47,29 +103,6 @@ const self = module.exports = {
         return et.parse(xmlStr);
     },
 
-    /**
-     * Will add a node to a certain (relative) location
-     *
-     * @param xml -> the xml file
-     * @param nodeTag -> the tag for the new node ('String', for example)
-     * @param attDict -> optional dict of att and values for the new node
-     * @param nodeText -> optional text the new node will carry
-     * @param parentNode -> (optional) the parent of the new node (for root descendent, leave blank)
-     */
-    addNode: function (xml, nodeTag, attDict = {}, nodeText = null, parentNode = null) {
-
-        if(parentNode === null) {
-            parentNode = self.getRoot(xml)
-        }
-
-        let element = et.SubElement(parentNode, nodeTag, attDict);
-
-        if(nodeText !== null) {
-            self.setNodeText(element, nodeText)
-        }
-
-        return element
-    },
 
     /**
      * Will return a list of nodes specified by an attribute key and and an attribute value.

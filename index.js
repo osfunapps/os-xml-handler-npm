@@ -172,6 +172,13 @@ const self = module.exports = {
     },
 
     /**
+     * Will remove a node
+     */
+    removeNode: function (parentNode, nodeToRemove) {
+        parentNode.remove(nodeToRemove)
+    },
+
+    /**
      * Will return the node's attribute value
      */
     getNodeAttributeValue: function (node, att) {

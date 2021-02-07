@@ -7,18 +7,18 @@ const self = module.exports = {
      * Will create an xml file to work with.
      * Notice: this method WON'T save the xml in the system. To save the xml, call saveXml(xml)
      *
-     * @param rootNodeTag -> the tag name of the root node
+     * @param rootNodeTag the tag name of the root node
      */
-    createXml: function (rootNodeTag) {
-        return self.loadXml(null, '<?xml version="1.0" encoding="utf-8"?>\n<' + rootNodeTag + '/>')
+    createXml: async function (rootNodeTag) {
+        return await self.loadXml(null, '<?xml version="1.0" encoding="utf-8"?>\n<' + rootNodeTag + '/>')
     },
 
     /**
      * Will insert a list of nodes into a certain (relative) location
      *
-     * @param xml -> the xml file
-     * @param nodesList -> the list of nodes to insert
-     * @param parentNode -> (optional) the parent of the newly inserted nodes (for root descendent,
+     * @param xml the xml file
+     * @param nodesList the list of nodes to insert
+     * @param parentNode (optional) the parent of the newly inserted nodes (for root descendent,
      * leave blank)
      */
     addNodes: function (xml, nodesList, parentNode = null) {
@@ -48,11 +48,11 @@ const self = module.exports = {
     /**
      * Will add a node to a certain (relative) location
      *
-     * @param xml -> the xml file
-     * @param nodeTag -> the tag for the new node ('String', for example)
-     * @param attDict -> optional dict of att and values for the new node
-     * @param nodeText -> optional text the new node will carry
-     * @param parentNode -> (optional) the parent of the new node (for root descendent, leave blank)
+     * @param xml the xml file
+     * @param nodeTag the tag for the new node ('String', for example)
+     * @param attDict optional dict of att and values for the new node
+     * @param nodeText optional text the new node will carry
+     * @param parentNode (optional) the parent of the new node (for root descendent, leave blank)
      */
     addNode: function (xml, nodeTag, attDict = {}, nodeText = null, parentNode = null) {
 
@@ -80,8 +80,8 @@ const self = module.exports = {
     /**
      * Will save any changes made in the xml
      *
-     * @param xml -> the xml
-     * @param filePath -> the output path of the file
+     * @param xml the xml
+     * @param filePath the output path of the file
      */
     saveXml: function (xml, filePath) {
         let xmlStr = xml.write({'xml_declaration': true});
@@ -91,8 +91,8 @@ const self = module.exports = {
     /**
      * Will load an xml file
      *
-     * @param fromPath -> optional path to the xml file
-     * @param fromStr -> optional xml string
+     * @param fromPath optional path to the xml file
+     * @param fromStr optional xml string
      */
     loadXml: async function (fromPath, fromStr = null) {
         let xmlStr = fromStr;
@@ -107,10 +107,10 @@ const self = module.exports = {
     /**
      * Will return a list of nodes specified by an attribute key and and an attribute value.
      *
-     * @param xml -> the xml object
-     * @param node_tag -> the tag of the nodes to look for
-     * @param node_att_name -> the att name of the nodes to look for
-     * @param node_att_val -> the att value of the nodes to look for
+     * @param xml the xml object
+     * @param node_tag the tag of the nodes to look for
+     * @param node_att_name the att name of the nodes to look for
+     * @param node_att_val the att value of the nodes to look for
      */
     getNodes: function (xml, node_tag, node_att_name = null, node_att_val = null) {
 
@@ -150,8 +150,8 @@ const self = module.exports = {
     /**
      * Will set attributes to an element
      *
-     * @param node -> the node to which the attributes will be appended
-     * @param attDict -> the dictionary of attributes to add
+     * @param node the node to which the attributes will be appended
+     * @param attDict the dictionary of attributes to add
      */
     setNodeAtt: function (node, attDict) {
         for (let key in attDict) {
